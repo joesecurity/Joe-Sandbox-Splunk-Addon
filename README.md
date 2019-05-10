@@ -8,7 +8,7 @@ This plugin feeds Joe Sandbox JSON reports automatically into Splunk.
 1. Download .tgz package
 2. Go to Splunk Home > Manage Apps (Apps Cog Icon) > Install app from File > Upload the downloaded File
 3. Go to Apps > Joe Sandbox Addon > Inputs > Create New Input
-4. Enter Name, Interval, Index, API URL, API KEY, Minimum Report ID and click Add
+4. Enter Name, Interval, Index, API URL, API KEY, Minimum Report ID, Small Report and click Add
 5. Go to Search and Report and Enter `sourcetype=jbx` to see downloaded reports.
 
 ## Search Command Examples:
@@ -114,36 +114,43 @@ sourcetype=jbx | search fileinfo.ole.olefile{}.entries.entry{}.stream.valueascii
 ```
 source=jbx | rename "behavior.system.processes.process{}.fileactivities.fileCreated.call{}.path" as fileCreated_path, "generalinfo.id" as id | mvexpand fileCreated_path | search fileCreated_path="C:\\Windows\\*" | table id, fileCreated_path
 ```
+This search is only possible if **Small Report** is set to false.
 
 ### Search for all samples which created an autostart registry key
 ```
 source=jbx | rename "behavior.system.processes.process{}.registryactivities.keyValueCreated.call{}.path" as keyValueCreated, "generalinfo.id" as id | mvexpand keyValueCreated | search keyValueCreated="*Run*" | table id, keyValueCreated
 ```
+This search is only possible if **Small Report** is set to false.
 
 ### Search for all samples which hooked the "send" Win32 call
 ```
 sourcetype=jbx | search behavior.hooks.user.process{}.module.hook{}.@hfunc="send" | table "generalinfo.id", "fileinfo.filename"
 ```
+This search is only possible if **Small Report** is set to false.
 
 ### Search for all samples which injected into explorer.exe
 ```
 sourcetype=jbx | search behavior.system.processes.process{}.general.name="explorer.exe" | search behavior.system.processes.process{}.general.reason="extstingprocessinject" | table "generalinfo.id", "fileinfo.filename"
 ```
+This search is only possible if **Small Report** is set to false.
 
 ### Search for all samples which injected into explorer.exe and contacted an IP address in Virgin Islands
 ```
 sourcetype=jbx | search behavior.system.processes.process{}.general.name="explorer.exe" | search behavior.system.processes.process{}.general.reason="extstingprocessinject" | search "ipinfo.ip{}.@country"="*Virgin Islands*" | table "generalinfo.id", "fileinfo.filename", "ipinfo.ip{}.@country"
 ```
+This search is only possible if **Small Report** is set to false.
 
 ### Search for all samples which started powershell
 ```
 sourcetype=jbx | search behavior.system.processes.process{}.general.name="powershell.exe" | table "generalinfo.id", "behavior.system.processes.process{}.general.cmdline"
 ```
+This search is only possible if **Small Report** is set to false.
 
 ### Search powershell event log (transcript)
 ```
 sourcetype=jbx | search "behavior.system.processes.process{}.powershellactivities.eventlog.call{}.name"="ScriptBlockText" | table "generalinfo.id", "behavior.system.processes.process{}.powershellactivities.eventlog.call{}.execution"
 ```
+This search is only possible if **Small Report** is set to false.
 
 ### List all malicious behavior signatures
 ```
