@@ -1,4 +1,4 @@
-![Pafish Macro screenshot](https://github.com/joesecurity/Joe-Sandbox-Splunk-Addon/blob/master/splunk-integration.p?raw=true)
+![Integration logo](https://github.com/joesecurity/Joe-Sandbox-Splunk-Addon/blob/master/splunk-integration.php?raw=true)
 
 # Joe Sandbox Splunk Addon Readme
 This plugin feeds Joe Sandbox JSON reports automatically into Splunk.
